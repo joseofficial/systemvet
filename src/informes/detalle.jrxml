@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="detalle" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6efb9274-54bf-49ac-9f1d-5ea0d67deef9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="factura" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     detallefactura.`idfactura` AS detallefactura_idfactura,
+     detallefactura.`idproducto` AS detallefactura_idproducto,
+     detallefactura.`fac_cantidad` AS detallefactura_fac_cantidad,
+     detallefactura.`fec_precio` AS detallefactura_fec_precio,
+     producto.`idproducto` AS producto_idproducto,
+     producto.`pro_nombre` AS producto_pro_nombre,
+     producto.`pro_precio` AS producto_pro_precio,
+     producto.`pro_cantidad` AS producto_pro_cantidad,
+     producto.`pro_iva` AS producto_pro_iva,
+     producto.`idproveedor` AS producto_idproveedor,
+if(producto.`pro_iva`='0',detallefactura.`fac_cantidad`*detallefactura.`fec_precio`,' ') as excenta,
+if(producto.`pro_iva`='5',detallefactura.`fac_cantidad`*detallefactura.`fec_precio`,' ') as cinco,
+if(producto.`pro_iva`='10',detallefactura.`fac_cantidad`*detallefactura.`fec_precio`,' ') as diez
+FROM
+     `producto` producto inner join `detallefactura` detallefactura on producto.`idproducto` =
+     detallefactura.`idproducto`
+     where detallefactura.`idfactura`=$P{factura}]]>
+	</queryString>
+	<field name="detallefactura_idfactura" class="java.lang.Integer"/>
+	<field name="detallefactura_idproducto" class="java.lang.Integer"/>
+	<field name="detallefactura_fac_cantidad" class="java.lang.Integer"/>
+	<field name="detallefactura_fec_precio" class="java.lang.Integer"/>
+	<field name="producto_idproducto" class="java.lang.Integer"/>
+	<field name="producto_pro_nombre" class="java.lang.String"/>
+	<field name="producto_pro_precio" class="java.lang.Integer"/>
+	<field name="producto_pro_cantidad" class="java.lang.Integer"/>
+	<field name="producto_pro_iva" class="java.lang.String"/>
+	<field name="producto_idproveedor" class="java.lang.Integer"/>
+	<field name="excenta" class="java.lang.String"/>
+	<field name="cinco" class="java.lang.String"/>
+	<field name="diez" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="14" y="0" width="57" height="20" uuid="4c2bf2dc-1292-46d1-83a7-bb6a51b3f5b2"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{detallefactura_fac_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="0" width="195" height="20" uuid="803f77c2-c6d5-4dc9-9080-546a2d6744d6"/>
+				<textFieldExpression><![CDATA[$F{producto_pro_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="85" height="20" uuid="0d0f4968-f857-4c7c-87b6-1a63663a7068"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{producto_pro_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="0" width="64" height="20" uuid="69c5f9f5-2bf0-4c4d-af1c-0556cd0ece18"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{excenta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="0" width="66" height="20" uuid="6f53c4cb-20e9-48ca-a953-95946c4bd383"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cinco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="499" y="0" width="55" height="20" uuid="0273d629-a72f-470a-b4c4-4ccd964fad34"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{diez}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
